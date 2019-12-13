@@ -22,14 +22,24 @@ exports.addUser = function(req, res){
 }
 
 // pobieramy dane użytkownika
-exports.getUser = function(req, res){
-  res.json(
-    usrMock.users.find(
-      function(element){
-        return element.id == req.params.id ? true : false;              
-      }
-    )
+exports.getUser = function(req, res){  
+  let usr = usrMock.users.find(
+    function(element){
+      return element.id == req.params.id ? true : false;              
+    }
+  ) 
+  res.json(usr ? usr : {"id":"not found"})
+}
+
+exports.delUser = function(req, res){
+  console.log('xxx')
+  usrMock.users = usrMock.users.filter(
+    function(element){
+      return element.id != req.params.id ? true : false;              
+    }
   )
+  res.json(usrMock.users);
+  
 }
 // podgląd wszystkich użytkowników tylko do dev / testów
 exports.getUsers = function(req, res){

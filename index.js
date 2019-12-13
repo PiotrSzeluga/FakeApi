@@ -12,6 +12,7 @@ app.use("/users", usrRoutes );
 
 
 
+
 // jeśli żadna ściezka nie pasuje to odpowiadamy 404
 app.use((req, res, next) => {
   const error = new Error("Not found");
