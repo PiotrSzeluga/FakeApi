@@ -28,20 +28,29 @@ exports.getUser = function(req, res){
       return element.id == req.params.id ? true : false;              
     }
   ) 
-  res.json(usr ? usr : {"id":"not found"})
+  res.json(usr ? usr : {"id":"not found"});
 }
 
+// usuwamy użytkownika - odfiltrowujemy id który został podany i nadpisujemy mocka
 exports.delUser = function(req, res){
-  console.log('xxx')
-  usrMock.users = usrMock.users.filter(
+  let changed = false;
+  let temp = usrMock.users.filter(
     function(element){
       return element.id != req.params.id ? true : false;              
     }
   )
-  res.json(usrMock.users);
+  changed = temp.length != usrMock.users.length ? true : false;
+  usrMock.users = temp;
+  if(changed){
+    usrMock.users = temp;
+    res.json({"deleted":req.params.id});
+  }
+  else{
+    res.json({"id":"not found"});
+  }
   
 }
 // podgląd wszystkich użytkowników tylko do dev / testów
 exports.getUsers = function(req, res){
-  res.json(usrMock.users)
+  res.json(usrMock.users);
 }
