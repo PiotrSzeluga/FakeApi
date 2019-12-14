@@ -3,11 +3,13 @@ const express = require('express');
 const app = express();
 const usrRoutes = require('./routes/users.routes');
 const transferRoutes = require('./routes/transfers.routes');
+const tokensRoutes = require('./routes/sms.tokens.routes');
 
 // używamy parsera żeby express rozumiał JSONa
 app.use(express.json());
-app.use("/users", usrRoutes );
-app.use("/transfers", transferRoutes);
+app.use(`${settings.path}users`, usrRoutes );
+app.use(`${settings.path}transfers`, transferRoutes);
+app.use(`${settings.path}tokens`, tokensRoutes);
 
 
 // jeśli żadna ściezka nie pasuje to odpowiadamy kodem 404

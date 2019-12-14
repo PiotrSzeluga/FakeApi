@@ -31,7 +31,6 @@ exports.validateTransfer = function(req, res){
     if(account.accBalance >= req.body.amount){
       transferMock.pendingTransfers.push(tempTransfer);
       smsController.generateSmsToken(tempTransfer.transferID);
-      console.log(tempTransfer.transferID);
       res.json({
             "status":"waitingForSmsCode",
             "transferID": tempTransfer.transferID
@@ -40,6 +39,5 @@ exports.validateTransfer = function(req, res){
     else{
       res.json({"status":"failed"});
     }
-  })
-  
+  }) 
 }
