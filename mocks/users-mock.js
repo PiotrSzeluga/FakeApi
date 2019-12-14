@@ -20,7 +20,7 @@ var users = [
     password:"b",
     accounts:[
       {
-        accNr:12341234123412341234123412,
+        accNr:22341234123412341234123412,
         accName:"Konto b.Korzystne",
         accBalance:1320.50,
         currency:"PLN"
