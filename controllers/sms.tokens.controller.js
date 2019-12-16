@@ -23,7 +23,7 @@ exports.generateSmsToken = function(transferID){
   smsTokens.smsTokens.push(smsToken)
   console.log(smsToken)
 }
-
+// sprawdzamy czy kod SMS i transfer ID się zgadzają, 
 exports.validateSmsToken = function(req, res){
   var transfer = transferMock.pendingTransfers.find(
     function(element){
@@ -35,8 +35,7 @@ exports.validateSmsToken = function(req, res){
       return element.transferID == req.body.transferID ? true : false;
     }
   )
-  if(transfer.transferID && transfer.transferID == smsToken.transferID){
-   //console.log(transferMock.pendingTransfers.indexOf(transfer)); // 
+  if(transfer.transferID && transfer.transferID == smsToken.transferID){//jeśli tak znajdujemy konta i przelewamy
    let senderAcc = getAccount(transfer.from.accNumber);
    let recipientAcc = getAccount(transfer.to.accNumber);
    senderAcc.accBalance -= transfer.amount;

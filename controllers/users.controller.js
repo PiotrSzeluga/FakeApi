@@ -1,4 +1,5 @@
 var usrMock = require('../mocks/users-mock.js')
+var loggedInUsers = require('../mocks/logged-in.users.mock');
 
 
 // dodajemy użytkownika
@@ -18,7 +19,6 @@ exports.addUser = function(req, res){
     res.json(usrMock.users);
     console.log
   })
-  
 }
 
 // pobieramy dane użytkownika
@@ -53,4 +53,28 @@ exports.delUser = function(req, res){
 // podgląd wszystkich użytkowników tylko do dev / testów
 exports.getUsers = function(req, res){
   res.json(usrMock.users);
+}
+
+// po wysłaniu loginu i hasła na /users/login dodajemy użytkownika do tablicy zalogowanych 
+exports.logIn = function(req,res){ //TODO zablokować możliwość wielokrotnego logowania (jeśli już zalogowany)
+  user = usrMock.users.find(
+    (itm) => {
+      return itm.login == req.body.login && itm.password == req.body.password? true: false;
+    } 
+  )
+  if(user){ // jeśli podał poprawne hasło i został znaleziony - inaczej user będzie rozwiązany do false
+    loggedInUsers.logedInUsers.push(user)
+  }
+  res.json(loggedInUsers);  //TODO - zwrócić coś sensownego
+}
+
+// wyloguj użytkownika
+exports.logOut = function(){
+  user = usrMock.users.find( // szukamy w zalogowanych użytkownikach takiego który odpowiada parametrom z req i zapisujemy go w zmiennej
+    (itm) => itm.login == req.body.login && itm.password == req.body.password? true: false
+  )
+  if(user){
+    loggedInUsers.logedInUsers.splice(indexOf(user),1)
+  }
+  res.json(loggedInUsers); //TODO - zwrócić coś sensownego
 }
